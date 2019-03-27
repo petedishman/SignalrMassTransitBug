@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using MassTransit;
+using Microsoft.AspNet.SignalR;
+using SignalrMassTransitBug.Consumers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,12 @@ namespace SignalrMassTransitBug.Hubs
         {
             try
             {
-                await Clients.All.TestResponse($"{DateTime.Now} - Hello");
+
+                var serviceAddress = new Uri($"rabbitmq://localhost/{MvcApplication.QueueName}");
+                var requestClient = new MessageRequestClient<ITest, ITestResponse>(MvcApplication.Bus, serviceAddress, TimeSpan.FromSeconds(10));
+                var response = await requestClient.Request(new Test { Message = "SendTestCommand" });
+
+                await Clients.All.TestResponse($"{DateTime.Now} - Got response: {response.Response}");
             }
             catch (Exception ex)
             {
