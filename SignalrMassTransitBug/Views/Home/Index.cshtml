@@ -9,7 +9,8 @@
     <div class="container body-content">
         <div>
             <h1>Signalr / Asp.Net &amp; MassTransit</h1>
-            <input type="button" id="sendButton" value="Send Message" />
+            <input type="button" id="sendButton" value="Test Request/Response" />
+            <input type="button" id="callAsyncVoidButton" value="Call Async Void Directly" />
             <ul id="messagesList"></ul>
 
         </div>
@@ -31,10 +32,9 @@
                 .fail(function () { console.log('Could not Connect!'); });
 
             document.getElementById("sendButton").addEventListener("click", function (event) {
-                console.log("Hit button");
                 testHub.server.test()
                     .done(function () {
-                        console.log("sent server message ok");
+                        //console.log("sent server message ok");
                     })
                     .fail(function (error) {
                         console.log("error sending message, err=" + error);
@@ -42,6 +42,19 @@
 
                 event.preventDefault();
             });
+
+            document.getElementById("callAsyncVoidButton").addEventListener("click", function (event) {
+                testHub.server.callAsyncVoidMethod()
+                    .done(function () {
+                        //console.log("sent server message ok");
+                    })
+                    .fail(function (error) {
+                        console.log("error sending message, err=" + error);
+                    });
+
+                event.preventDefault();
+            });
+
         </script>
     </div>
 </body>

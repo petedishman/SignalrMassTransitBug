@@ -34,7 +34,7 @@ namespace SignalrMassTransitBug.Consumers
         {
             await context.RespondAsync(new TestResponse
             {
-                Response = $"Thanks for saying {context.Message.Message}"
+                Response = $"Processed Request: {context.Message.Message}"
             });
         }
     }
