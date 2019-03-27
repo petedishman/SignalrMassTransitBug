@@ -37,7 +37,7 @@ namespace SignalrMassTransitBug.Hubs
             }
             catch (Exception ex)
             {
-                await Clients.All.TestResponse($"CallAsyncVoid - Exception:\n{ex.ToString()}");
+                await Clients.All.TestResponse($"CallAsyncVoid - Exception:\n{ex.ToString()}\n{ex.StackTrace}\n");
             }
         }
 
